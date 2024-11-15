@@ -1,8 +1,11 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 const express = require('express')
+const cors = require('cors');
 
 const app = express()
+
+app.use(cors());
 // URL of the news website to scrape
 
 async function scrapeNews(req, res) {
