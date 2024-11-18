@@ -9,7 +9,7 @@ app.use(cors());
 // URL of the news website to scrape
 
 async function scrapeNews(req, res) {
-    const URL = 'https://www.indiatoday.in/home';
+    const URL = 'http://127.0.0.1:5500/index.html';
     try {
         // Fetch the HTML of the page
         const { data } = await axios.get(URL);
@@ -26,6 +26,7 @@ async function scrapeNews(req, res) {
             // Get the href (the link)
 
             // Push the article title and link to the articles array
+            console.log(title)
             articles.push({
                 title: title,
             });
