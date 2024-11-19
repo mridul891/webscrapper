@@ -27,17 +27,17 @@ async function scrapeNews(req, res) {
       const elements = Array.from(
         document.querySelectorAll(".B1S3_content__wrap__9mSB6")
       ); // Replace with your selector
-      
+
       return elements.map((el) => {
         return {
-          title: el.textContent.trim()
+          title: el.textContent.trim(),
         };
       });
     });
 
-     return res.json({data : content})
+    await browser.close();
+    return res.json({ data: content });
     // Close the browser
-
   } catch (error) {
     console.error("Error:", error);
   }
