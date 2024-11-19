@@ -9,7 +9,6 @@ app.use(cors());
 // URL of the news website to scrape
 
 async function scrapeNews(req, res) {
-
   try {
     const url = "https://mridul891.github.io/newssite/";
 
@@ -25,12 +24,12 @@ async function scrapeNews(req, res) {
 
         // Assuming headlines are in <h2> tags
         $("h2").each((index, element) => {
-          const headline = $(element).text().replace(/\s+/g, ' ').trim(); // Trim removes extra spaces and newlines
-          headlines.push({title : headline});
+          const headline = $(element).text().replace(/\s+/g, " ").trim(); // Trim removes extra spaces and newlines
+          headlines.push({ title: headline });
         });
 
         // Log the extracted data
-        res.json({ data: headlines });
+        res.json(headlines);
       })
       .catch((error) => {
         console.error("Error fetching the website:", error);
