@@ -9,37 +9,35 @@ app.use(cors());
 // URL of the news website to scrape
 
 async function scrapeNews(req, res) {
+
   try {
-    // Launch a headless browser
-    const browser = await puppeteer.launch({ headless: true });
-    const page = await browser.newPage();
+    const url = "https://mridul891.github.io/newssite/";
 
-    // Navigate to the React website
-    const url = "https://fplanding.vercel.app/news";
-    await page.goto(url, { waitUntil: "networkidle2" }); // Wait until network is idle
+    // Fetch and scrape the website
+    axios
+      .get(url)
+      .then((response) => {
+        // Load the HTML into cheerio
+        const $ = cheerio.load(response.data);
 
-    // Wait for a specific element to load
-    await page.waitForSelector(".B1S3_content__wrap__9mSB6"); // Replace with the actual element class or ID
+        // Extract data (modify selectors based on actual HTML structure)
+        const headlines = [];
 
-    // Extract content
-    const content = await page.evaluate(() => {
-      // Modify this based on the data you need
-      const elements = Array.from(
-        document.querySelectorAll(".B1S3_content__wrap__9mSB6")
-      ); // Replace with your selector
+        // Assuming headlines are in <h2> tags
+        $("h2").each((index, element) => {
+          const headline = $(element).text().replace(/\s+/g, ' ').trim(); // Trim removes extra spaces and newlines
+          headlines.push({title : headline});
+        });
 
-      return elements.map((el) => {
-        return {
-          title: el.textContent.trim(),
-        };
+        // Log the extracted data
+        console.log(headlines)
+        res.json({ data: headlines });
+      })
+      .catch((error) => {
+        console.error("Error fetching the website:", error);
       });
-    });
-
-    await browser.close();
-    return res.json({ data: content });
-    // Close the browser
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Error scraping news:", error);
   }
 }
 
