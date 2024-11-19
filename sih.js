@@ -35,9 +35,9 @@ async function scrapeNews(req, res) {
       });
     });
 
-    res.json(content)
+     return res.json({data : content})
     // Close the browser
-    await browser.close();
+
   } catch (error) {
     console.error("Error:", error);
   }
