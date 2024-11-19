@@ -30,7 +30,6 @@ async function scrapeNews(req, res) {
         });
 
         // Log the extracted data
-        console.log(headlines)
         res.json({ data: headlines });
       })
       .catch((error) => {
