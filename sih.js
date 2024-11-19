@@ -35,10 +35,6 @@ async function scrapeNews(req, res) {
       });
     });
 
-    // console.log({ data: content }); // For debugging purposes
-    // // Example response in JSON format
-    // console.log(JSON.stringify({ data: content }, null, 2));
-
     res.json(content)
     // Close the browser
     await browser.close();
