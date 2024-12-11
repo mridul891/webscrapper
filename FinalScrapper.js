@@ -3,11 +3,8 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
 const express = require("express");
-const cors = require("cors")
 
 const app = express();
-
-app.use(cors())
 // Define an array of target websites and the data you want to scrape
 const websites = [
   {
@@ -53,7 +50,7 @@ async function scrapeWebsite({ url, parseData }) {
 }
 
 // Main function to scrape all websites
-async function scrapeAllWebsites(req , res) {
+async function scrapeAllWebsites() {
   const aggregatedData = [];
 
   const results = await Promise.all(websites.map(scrapeWebsite));
@@ -67,17 +64,16 @@ async function scrapeAllWebsites(req , res) {
   });
 
   console.log("Aggregated Data:", aggregatedData);
-  res.json(aggregatedData)
+  return aggregatedData;
 }
 
 // Run the scraper
 
-app.get("/info", scrapeAllWebsites);
+app.get("/info" , scrapeAllWebsites)
 
-app.get("/", (req, res) => {
+app.get("/" , (req , res) =>{
   res.json({
-    message: " Started",
-  });
-});
-
+    message : " Started"
+  })
+})
 app.listen(3005, () => console.log("server stareted at point : 3005"));
